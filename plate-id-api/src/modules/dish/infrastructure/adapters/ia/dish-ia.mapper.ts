@@ -20,7 +20,7 @@ export class DishIAMapper {
     );
 
     const scores = from.scores.map(
-      (score) => new Score(score.name, score.value),
+      (score) => new Score(score.name, score.value, score.description),
     );
 
     return new Dish(name, from.origin, new Recipe(ingredients, steps), scores);

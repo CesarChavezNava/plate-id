@@ -37,8 +37,8 @@ export class DishIAAdapter implements DishIAPort {
       schema: DishSchema,
       prompt: `
   Dame el origen y la receta para el platillo ${name} dividida en ingredientes y pasos. Además, dame los siguientes scores:
-  - Nombre Saludable: ¿Qué tan saludable es (1-100)?
-  - Score Delicioso: ¿Qué tan delicioso es según la percepción (1-100)?`,
+  - Score Saludable: ¿Qué tan saludable es (1-100)? con una descripción del porque, no mas de 50 palabras
+  - Score Delicioso: ¿Qué tan delicioso es según la percepción (1-100)? con una descripción del porque, no mas de 50 palabras`,
     });
 
     return this.mapper.toDish(name, object);
