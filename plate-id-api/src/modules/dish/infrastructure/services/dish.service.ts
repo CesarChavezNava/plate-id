@@ -5,7 +5,7 @@ import {
   FindDish,
   RecognizeDish,
   CreateDish,
-} from '../../applicatiion';
+} from '../../application';
 
 @Injectable()
 export class DishService {

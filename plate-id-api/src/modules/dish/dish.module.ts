@@ -11,7 +11,7 @@ import {
   FindDish,
   GetDishDetails,
   RecognizeDish,
-} from './applicatiion';
+} from './application';
 
 @Module({
   imports: [
