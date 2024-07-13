@@ -6,19 +6,13 @@ export const ScoreSchema = z.object({
   description: z.string().describe('Descripcion del porque el score'),
 });
 
-export const StepSchema = z.object({
-  index: z.number().positive().describe('Número de paso'),
-  description: z.string().describe('Descripción de lo que se tiene que hacer'),
-});
-
-export const IngredientSchema = z.object({
-  name: z.string().describe('Nombre o descripción del ingrediente'),
-  quantity: z.string().describe('Cantidad del ingrediente'),
-});
-
 export const RecipeSchema = z.object({
-  ingredients: z.array(IngredientSchema).describe('Lista de ingredientes'),
-  instructions: z.array(StepSchema).describe('Instrucciones en pasos'),
+  ingredients: z
+    .array(z.string().describe('Amount - ingredient name'))
+    .describe('Lista de ingredientes'),
+  instructions: z
+    .array(z.string().describe('# - Instruction detail'))
+    .describe('Instrucciones en pasos'),
 });
 
 export const DishSchema = z.object({
@@ -31,4 +25,7 @@ export type DishType = z.infer<typeof DishSchema>;
 
 export const RecognizeDishSchema = z.object({
   name: z.string(),
+  score: ScoreSchema.optional().describe(
+    'score how compatible the dish is according to your tastes',
+  ),
 });

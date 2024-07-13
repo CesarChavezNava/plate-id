@@ -4,8 +4,8 @@ import { Score } from './score';
 export class Dish {
   constructor(
     public readonly name: string,
-    public readonly origin?: string,
-    public readonly recipe?: Recipe,
-    public readonly scores?: Score[],
+    public readonly origin: string,
+    public readonly recipe: Recipe,
+    public readonly scores: Score[],
   ) {}
 }

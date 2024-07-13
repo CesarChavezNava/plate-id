@@ -20,7 +20,8 @@ export class DishIAAdapter implements DishIAPort {
           content: [
             {
               type: 'text',
-              text: 'Con base en la siguiente imagen dame el nombre del platillo',
+              text: `
+                Con base en la siguiente imagen dame el nombre del platillo`,
             },
             { type: 'image', image: image },
           ],
