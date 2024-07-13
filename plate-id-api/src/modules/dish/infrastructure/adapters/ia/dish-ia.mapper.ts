@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Dish, Recipe, Score } from '../../../domain/entities';
+import { Score } from '../../../../shared/domain/entities';
+import { Dish, Recipe } from '../../../domain/entities';
 import { DishType } from './dish-ia.schemas';
 
 @Injectable()

@@ -1,5 +1,5 @@
+import { Score } from '../../../shared/domain/entities';
 import { Recipe } from './recipe';
-import { Score } from './score';
 
 export class Dish {
   constructor(

@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { Dish } from '../../domain/entities';
 import {
-  GetDishDetails,
-  FindDish,
-  RecognizeDish,
   CreateDish,
-} from '../../application';
+  FindDish,
+  GetDishDetails,
+  RecognizeDish,
+} from '../../modules/dish/application';
+import { Dish } from '../../modules/dish/domain/entities';
 
 @Injectable()
-export class DishService {
+export class DishCompatibilityService {
   constructor(
     private readonly recognizeDish: RecognizeDish,
     private readonly findDish: FindDish,
@@ -16,7 +16,7 @@ export class DishService {
     private readonly getDishDetails: GetDishDetails,
   ) {}
 
-  async findOrCreate(image: Buffer): Promise<Dish> {
+  async search(image: Buffer): Promise<Dish> {
     const name = await this.recognizeDish.execute(image);
     let dish = await this.findDish.execute(name);
 

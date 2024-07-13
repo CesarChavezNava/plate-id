@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../shared/database.module';
 import { DishMongoRepository } from './infrastructure/repositories/dish-mongo.repository';
-import { DishService } from './infrastructure/services';
-import { DishController } from './infrastructure/controllers';
 import { DishProviders } from './infrastructure/providers/dish.provider';
-import { ConfigModule } from '@nestjs/config';
 import { DishIAAdapter, DishIAMapper } from './infrastructure/adapters';
 import {
   CreateDish,
@@ -14,12 +11,7 @@ import {
 } from './application';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      envFilePath: '.env',
-    }),
-    DatabaseModule,
-  ],
+  imports: [DatabaseModule],
   providers: [
     ...DishProviders,
     {
@@ -35,8 +27,7 @@ import {
     RecognizeDish,
     GetDishDetails,
     DishIAMapper,
-    DishService,
   ],
-  controllers: [DishController],
+  exports: [CreateDish, FindDish, RecognizeDish, GetDishDetails],
 })
 export class DishModule {}

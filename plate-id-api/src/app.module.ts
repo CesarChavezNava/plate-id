@@ -1,9 +1,15 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
-import { DishModule } from './modules/dish/dish.module';
+import { ApiModule } from './api/api.module';
 
 @Module({
-  imports: [DishModule],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+    }),
+    ApiModule,
+  ],
   controllers: [AppController],
 })
 export class AppModule {}

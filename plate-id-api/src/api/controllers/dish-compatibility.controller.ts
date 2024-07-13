@@ -1,5 +1,6 @@
 import { Response } from 'express';
 import {
+  Body,
   Controller,
   HttpStatus,
   Post,
@@ -7,13 +8,16 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { DishService } from '../services';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
+import { SearchDishCompatibilityDto } from '../dtos';
+import { DishCompatibilityService } from '../services/dish-compatibility.serviice';
 
-@Controller('dishes')
-export class DishController {
-  constructor(private readonly dishService: DishService) {}
+@Controller('dish-compatibility')
+export class DishCompatibilityController {
+  constructor(
+    private readonly dishCompatibilityService: DishCompatibilityService,
+  ) {}
 
   @Post()
   @UseInterceptors(
@@ -21,15 +25,16 @@ export class DishController {
       storage: memoryStorage(),
     }),
   )
-  async findOrCreate(
+  async search(
     @UploadedFile() image: Express.Multer.File,
+    @Body() dto: SearchDishCompatibilityDto,
     @Res() res: Response,
   ): Promise<void> {
     try {
       const imageBuffer = image.buffer;
-      const dish = await this.dishService.findOrCreate(imageBuffer);
+      const dish = await this.dishCompatibilityService.search(imageBuffer);
 
-      res.status(HttpStatus.CREATED).send(dish);
+      res.status(HttpStatus.OK).send(dish);
     } catch (error) {
       res.status(HttpStatus.BAD_REQUEST).send({ message: error.message });
     }
