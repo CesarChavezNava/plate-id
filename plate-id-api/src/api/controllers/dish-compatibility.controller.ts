@@ -23,6 +23,7 @@ export class DishCompatibilityController {
   @UseInterceptors(
     FileInterceptor('image', {
       storage: memoryStorage(),
+      limits: { fileSize: 250 * 1024 },
     }),
   )
   async search(
