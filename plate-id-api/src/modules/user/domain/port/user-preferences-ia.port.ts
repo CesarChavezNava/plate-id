@@ -1,9 +1,9 @@
 import { Score } from '../../../shared/domain/entities';
-import { UserPreferences } from '../entities';
+import { Preferences } from '../entities';
 
 export interface UserPreferencesIAPort {
   calculateCompatibility(
     dishName: string,
-    user: UserPreferences,
+    user: Preferences,
   ): Promise<Score>;
 }

@@ -3,10 +3,12 @@ import { DishModule } from 'src/modules/dish/dish.module';
 import { UserModule } from 'src/modules/user/user.module';
 import { DishCompatibilityController } from './controllers/dish-compatibility.controller';
 import { DishCompatibilityService } from './services/dish-compatibility.serviice';
+import { UserService } from './services/user.service';
+import { UserController } from './controllers/user.controller';
 
 @Module({
   imports: [DishModule, UserModule],
-  providers: [DishCompatibilityService],
-  controllers: [DishCompatibilityController],
+  providers: [DishCompatibilityService, UserService],
+  controllers: [DishCompatibilityController, UserController],
 })
 export class ApiModule {}

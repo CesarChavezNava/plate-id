@@ -1,4 +1,4 @@
-import { UserPreferences } from 'src/modules/user/domain/entities';
+import { Preferences } from 'src/modules/user/domain/entities';
 import { UserPreferencesIAPort } from '../../../domain/port/user-preferences-ia.port';
 import { generateObject } from 'ai';
 import { openai } from '@ai-sdk/openai';
@@ -11,7 +11,7 @@ export class UserPreferencesIAAdapter implements UserPreferencesIAPort {
 
   async calculateCompatibility(
     dishName: string,
-    user: UserPreferences,
+    user: Preferences,
   ): Promise<Score> {
     const { object } = await generateObject({
       model: openai('gpt-4o'),

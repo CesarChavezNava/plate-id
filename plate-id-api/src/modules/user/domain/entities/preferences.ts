@@ -1,4 +1,4 @@
-export class UserPreferences {
+export class Preferences {
   constructor(
     public readonly favoriteIngredients: string[],
     public readonly dislikedIngredients: string[],
