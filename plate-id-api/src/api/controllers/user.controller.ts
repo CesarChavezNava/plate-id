@@ -30,7 +30,9 @@ export class UserController {
       if (error instanceof BaseError) {
         res.status(error.code).send({ message: error.message });
       } else {
-        res.status(HttpStatus.BAD_REQUEST).send({ message: error.message });
+        res
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .send({ message: error.message });
       }
     }
   }
@@ -49,7 +51,9 @@ export class UserController {
       if (error instanceof BaseError) {
         res.status(error.code).send({ message: error.message });
       } else {
-        res.status(HttpStatus.BAD_REQUEST).send({ message: error.message });
+        res
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .send({ message: error.message });
       }
     }
   }

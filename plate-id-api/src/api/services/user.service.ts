@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUser, UpdateUser } from '../../modules/user/application';
+import {
+  CreateUser,
+  FindUser,
+  UpdateUser,
+} from '../../modules/user/application';
 import { CreateUserDto, UpdateUserDto } from '../dtos';
 import { User } from '../../modules/user/domain/entities';
 
@@ -8,6 +12,7 @@ export class UserService {
   constructor(
     private readonly createUser: CreateUser,
     private readonly updateUser: UpdateUser,
+    private readonly findUser: FindUser,
   ) {}
 
   async create(dto: CreateUserDto): Promise<string> {
@@ -16,5 +21,9 @@ export class UserService {
 
   async update(userId: string, dto: UpdateUserDto): Promise<void> {
     await this.updateUser.execute(userId, User.addPreferences(dto.preferences));
+  }
+
+  async find(userId: string): Promise<User> {
+    return await this.findUser.execute(userId);
   }
 }
