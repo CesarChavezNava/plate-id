@@ -15,8 +15,19 @@ export class UserMongoRepository implements UserRepository {
     return user ? user.toObject() : undefined;
   }
 
-  async create(user: User): Promise<void> {
+  async findById(userId: string): Promise<User> {
+    const user = await this.userModel.findById(userId).exec();
+    return user ? user.toObject() : undefined;
+  }
+
+  async create(user: User): Promise<string> {
     const userCreated = new this.userModel(user);
-    await userCreated.save();
+    const savedUser = await userCreated.save();
+
+    return savedUser._id as string;
+  }
+
+  async update(userId: string, user: Partial<User>): Promise<void> {
+    await this.userModel.findByIdAndUpdate(userId, user, { new: true });
   }
 }

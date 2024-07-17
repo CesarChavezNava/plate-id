@@ -11,7 +11,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { SearchDishCompatibilityDto } from '../dtos';
-import { DishCompatibilityService } from '../services/dish-compatibility.serviice';
+import { DishCompatibilityService } from '../services/dish-compatibility.service';
 
 @Controller('dish-compatibility')
 export class DishCompatibilityController {
