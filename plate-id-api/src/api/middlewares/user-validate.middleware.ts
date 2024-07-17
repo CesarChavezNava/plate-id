@@ -9,20 +9,20 @@ export class UserValidateMiddleware implements NestMiddleware<any, any> {
 
   async use(req: Request, res: Response, next: () => void) {
     if (!req.headers['x-plateid-userid']) {
-      res.status(HttpStatus.UNAUTHORIZED);
+      res.status(HttpStatus.UNAUTHORIZED).send();
       return;
     }
 
     const userId = req.headers['x-plateid-userid'];
     if (!userId) {
-      res.status(HttpStatus.UNAUTHORIZED);
+      res.status(HttpStatus.UNAUTHORIZED).send();
       return;
     }
 
     try {
       const user = await this.userService.find(userId.toString());
 
-      req.body.preferences = user.preferences;
+      req.body = user.preferences;
       next();
     } catch (error) {
       if (error instanceof BaseError) {

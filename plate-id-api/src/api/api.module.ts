@@ -15,7 +15,7 @@ import { UserValidateMiddleware } from './middlewares/user-validate.middleware';
 export class ApiModule {
   async configure(consumer: MiddlewareConsumer): Promise<void> {
     consumer.apply(UserValidateMiddleware).forRoutes({
-      path: '/dishes/*',
+      path: 'dish-compatibility',
       method: RequestMethod.ALL,
     });
   }

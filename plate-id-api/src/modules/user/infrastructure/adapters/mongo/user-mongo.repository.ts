@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Inject, Injectable } from '@nestjs/common';
 import { User } from '../../../domain/entities';
 import { UserModel } from './models/user.model';
@@ -16,7 +16,8 @@ export class UserMongoRepository implements UserRepository {
   }
 
   async findById(userId: string): Promise<User> {
-    const user = await this.userModel.findById(userId).exec();
+    const objectId = new Types.ObjectId(userId);
+    const user = await this.userModel.findById({ _id: objectId }).exec();
     return user ? user.toObject() : undefined;
   }
 
@@ -24,7 +25,7 @@ export class UserMongoRepository implements UserRepository {
     const userCreated = new this.userModel(user);
     const savedUser = await userCreated.save();
 
-    return savedUser._id as string;
+    return savedUser._id.toString();
   }
 
   async update(userId: string, user: Partial<User>): Promise<void> {

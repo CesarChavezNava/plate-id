@@ -46,7 +46,7 @@ export class UserController {
     try {
       await this.userService.update(userId, dto);
 
-      res.status(HttpStatus.NO_CONTENT);
+      res.status(HttpStatus.NO_CONTENT).send();
     } catch (error) {
       if (error instanceof BaseError) {
         res.status(error.code).send({ message: error.message });

@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
-import { SearchDishCompatibilityDto } from '../dtos';
 import { DishCompatibilityService } from '../services/dish-compatibility.service';
+import { Preferences } from '../../modules/user/domain/entities';
 
 @Controller('dish-compatibility')
 export class DishCompatibilityController {
@@ -28,16 +28,19 @@ export class DishCompatibilityController {
   )
   async search(
     @UploadedFile() image: Express.Multer.File,
-    @Body() dto: SearchDishCompatibilityDto,
+    @Body() preferences: Preferences,
     @Res() res: Response,
   ): Promise<void> {
     try {
+      console.log(preferences);
       const imageBuffer = image.buffer;
       const dish = await this.dishCompatibilityService.search(imageBuffer);
 
       res.status(HttpStatus.OK).send(dish);
     } catch (error) {
-      res.status(HttpStatus.BAD_REQUEST).send({ message: error.message });
+      res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .send({ message: error.message });
     }
   }
 }

@@ -4,7 +4,7 @@ import { CalculateCompatibility } from './application/calculate-compatibility.us
 import { SharedModule } from '../shared/shared.module';
 import { UserProviders } from './infrastructure/adapters/mongo/user.providers';
 import { UserMongoRepository } from './infrastructure/adapters/mongo/user-mongo.repository';
-import { CreateUser } from './application';
+import { CreateUser, FindUser, UpdateUser } from './application';
 import { DatabaseModule } from '../shared/database.module';
 
 @Module({
@@ -20,8 +20,10 @@ import { DatabaseModule } from '../shared/database.module';
       useClass: UserMongoRepository,
     },
     CreateUser,
+    UpdateUser,
+    FindUser,
     CalculateCompatibility,
   ],
-  exports: [CalculateCompatibility, CreateUser],
+  exports: [CalculateCompatibility, CreateUser, UpdateUser, FindUser],
 })
 export class UserModule {}
