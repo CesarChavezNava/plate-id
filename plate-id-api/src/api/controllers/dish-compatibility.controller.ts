@@ -11,7 +11,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { DishCompatibilityService } from '../services/dish-compatibility.service';
-import { Preferences } from '../../modules/user/domain/entities';
+import { Preferences } from '../../modules/shared/domain/entities';
 
 @Controller('dish-compatibility')
 export class DishCompatibilityController {
@@ -32,9 +32,11 @@ export class DishCompatibilityController {
     @Res() res: Response,
   ): Promise<void> {
     try {
-      console.log(preferences);
       const imageBuffer = image.buffer;
-      const dish = await this.dishCompatibilityService.search(imageBuffer);
+      const dish = await this.dishCompatibilityService.search(
+        imageBuffer,
+        preferences,
+      );
 
       res.status(HttpStatus.OK).send(dish);
     } catch (error) {

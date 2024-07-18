@@ -1,4 +1,4 @@
-import { Preferences } from './preferences';
+import { Preferences } from '../../../shared/domain/entities';
 
 export class User {
   constructor(

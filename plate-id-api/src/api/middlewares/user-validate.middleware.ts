@@ -21,7 +21,6 @@ export class UserValidateMiddleware implements NestMiddleware<any, any> {
 
     try {
       const user = await this.userService.find(userId.toString());
-
       req.body = user.preferences;
       next();
     } catch (error) {

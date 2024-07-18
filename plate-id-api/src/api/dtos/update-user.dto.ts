@@ -1,4 +1,4 @@
-import { Preferences } from '../../modules/user/domain/entities';
+import { Preferences } from '../../modules/shared/domain/entities';
 
 export class UpdateUserDto {
   preferences: Preferences;

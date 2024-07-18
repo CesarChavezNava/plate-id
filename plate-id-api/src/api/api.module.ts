@@ -6,9 +6,10 @@ import { DishCompatibilityService } from './services/dish-compatibility.service'
 import { UserService } from './services/user.service';
 import { UserController } from './controllers/user.controller';
 import { UserValidateMiddleware } from './middlewares/user-validate.middleware';
+import { DishCompatibilityModule } from 'src/modules/dish-compatibility/dish-compatibility.module';
 
 @Module({
-  imports: [DishModule, UserModule],
+  imports: [DishCompatibilityModule, DishModule, UserModule],
   providers: [DishCompatibilityService, UserService, UserValidateMiddleware],
   controllers: [DishCompatibilityController, UserController],
 })
