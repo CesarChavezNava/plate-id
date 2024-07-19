@@ -10,7 +10,32 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: pl4t31D
     volumes:
       - mongo-data:/data/db
+    networks:
+      - plate-id-network
+
+  plate-id-api:
+    build:
+      context: ./plate-id-api
+      dockerfile: Dockerfile
+    container_name: plate-id-api
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      DB_CONNECTION_STRING: ${DB_CONNECTION_STRING}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - ./plate-id-api:/usr/src/app:delegated
+    command: ["npm", "run", "start:prod"]
+    networks:
+      - plate-id-network
 
 volumes:
   mongo-data:
     driver: local
+
+networks:
+  plate-id-network:
+    driver: bridge
