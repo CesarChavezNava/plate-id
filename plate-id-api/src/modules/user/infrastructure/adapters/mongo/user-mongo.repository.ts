@@ -22,7 +22,11 @@ export class UserMongoRepository implements UserRepository {
   }
 
   async create(user: User): Promise<string> {
-    const userCreated = new this.userModel(user);
+    const userCreated = new this.userModel({
+      _id: new Types.ObjectId(),
+      email: user.email,
+      preferences: user.preferences,
+    });
     const savedUser = await userCreated.save();
 
     return savedUser._id.toString();

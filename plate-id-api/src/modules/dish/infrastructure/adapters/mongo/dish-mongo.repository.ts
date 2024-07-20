@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { DishRepository } from '../../domain/repositories/dish.repository';
-import { Dish } from '../../domain/entities';
-import { DishModel } from '../models';
+import { DishRepository } from '../../../domain/repositories/dish.repository';
+import { Dish } from '../../../domain/entities';
+import { DishModel } from './models';
 
 @Injectable()
 export class DishMongoRepository implements DishRepository {

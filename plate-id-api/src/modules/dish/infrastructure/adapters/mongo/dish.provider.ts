@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { DishSchema } from '../schemas/dish.schema';
+import { DishSchema } from './schemas/dish.schema';
 
 export const DishProviders = [
   {

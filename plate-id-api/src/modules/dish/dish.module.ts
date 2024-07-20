@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../shared/database.module';
-import { DishMongoRepository } from './infrastructure/repositories/dish-mongo.repository';
-import { DishProviders } from './infrastructure/providers/dish.provider';
+import { DishMongoRepository } from './infrastructure/adapters/mongo/dish-mongo.repository';
+import { DishProviders } from './infrastructure/adapters/mongo/dish.provider';
 import { DishIAAdapter, DishIAMapper } from './infrastructure/adapters';
 import {
   CreateDish,

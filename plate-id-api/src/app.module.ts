@@ -7,7 +7,7 @@ import { ApiModule } from './api/api.module';
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
-      ignoreEnvFile: true,
+      //ignoreEnvFile: true,
     }),
     ApiModule,
   ],
