@@ -1,33 +1,18 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../shared/database.module';
-import { DishMongoRepository } from './infrastructure/adapters/mongo/dish-mongo.repository';
-import { DishProviders } from './infrastructure/adapters/mongo/dish.provider';
-import { DishIAAdapter, DishIAMapper } from './infrastructure/adapters';
 import {
-  CreateDish,
-  FindDish,
-  GetDishDetails,
-  RecognizeDish,
-} from './application';
+  DishAdapterProviders,
+  MongoDishProviders,
+} from './infrastructure/adapters';
+import { DishUseCasesProviders } from './application';
 
 @Module({
   imports: [DatabaseModule],
   providers: [
-    ...DishProviders,
-    {
-      provide: 'DishRepository',
-      useClass: DishMongoRepository,
-    },
-    {
-      provide: 'DishIAPort',
-      useClass: DishIAAdapter,
-    },
-    CreateDish,
-    FindDish,
-    RecognizeDish,
-    GetDishDetails,
-    DishIAMapper,
+    ...MongoDishProviders,
+    ...DishAdapterProviders,
+    ...DishUseCasesProviders,
   ],
-  exports: [CreateDish, FindDish, RecognizeDish, GetDishDetails],
+  exports: [...DishUseCasesProviders],
 })
 export class DishModule {}

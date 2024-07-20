@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
-  CreateUser,
-  FindUser,
-  UpdateUser,
+  ForCreatingUser,
+  ForFindingUser,
+  ForUpdatingUserPreferences,
 } from '../../modules/user/application';
 import { CreateUserDto, UpdateUserDto } from '../dtos';
 import { User } from '../../modules/user/domain/entities';
@@ -10,20 +10,23 @@ import { User } from '../../modules/user/domain/entities';
 @Injectable()
 export class UserService {
   constructor(
-    private readonly createUser: CreateUser,
-    private readonly updateUser: UpdateUser,
-    private readonly findUser: FindUser,
+    @Inject('ForCreatingUser')
+    private readonly userCreator: ForCreatingUser,
+    @Inject('ForUpdatingUserPreferences')
+    private readonly userPreferencesUpdater: ForUpdatingUserPreferences,
+    @Inject('ForFindingUser')
+    private readonly userFinder: ForFindingUser,
   ) {}
 
   async create(dto: CreateUserDto): Promise<string> {
-    return await this.createUser.execute(new User(dto.email, dto.preferences));
+    return await this.userCreator.execute(new User(dto.email, dto.preferences));
   }
 
-  async update(userId: string, dto: UpdateUserDto): Promise<void> {
-    await this.updateUser.execute(userId, User.addPreferences(dto.preferences));
+  async updatePreferences(userId: string, dto: UpdateUserDto): Promise<void> {
+    await this.userPreferencesUpdater.execute(userId, dto.preferences);
   }
 
   async find(userId: string): Promise<User> {
-    return await this.findUser.execute(userId);
+    return await this.userFinder.execute(userId);
   }
 }

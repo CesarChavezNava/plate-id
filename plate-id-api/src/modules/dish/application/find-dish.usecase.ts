@@ -1,9 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DishRepository } from '../domain/repositories/dish.repository';
+import { DishRepository } from '../domain/ports/dish.repository';
 import { Dish } from '../domain/entities';
 
+export interface ForFindingDish {
+  execute(name: string): Promise<Dish>;
+}
+
 @Injectable()
-export class FindDish {
+export class DishFinder implements ForFindingDish {
   constructor(
     @Inject('DishRepository') private readonly dishRepository: DishRepository,
   ) {}

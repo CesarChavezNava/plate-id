@@ -1,2 +1,2 @@
-export * from './ia/dish-ia.adpater';
-export * from './ia/dish-ia.mapper';
+export * from './adapters.providers';
+export * from './mongo/mongo-dish.provider';

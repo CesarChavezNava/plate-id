@@ -1,11 +1,28 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DishIAPort } from '../domain/ports/dish-ia.port';
+import { DishAIService } from '../domain/ports/dish-ai.service';
+import { DishUnrecognized, ThereAreManyDishes } from '../domain/errors';
+
+export interface ForRecognizingDish {
+  execute(dishImage: Buffer): Promise<string>;
+}
 
 @Injectable()
-export class RecognizeDish {
-  constructor(@Inject('DishIAPort') private readonly dishIAPort: DishIAPort) {}
+export class DishRecognizer implements ForRecognizingDish {
+  constructor(
+    @Inject('DishAIService') private readonly dishAIService: DishAIService,
+  ) {}
 
-  async execute(image: Buffer): Promise<string> {
-    return await this.dishIAPort.recognizeDish(image);
+  async execute(dishImage: Buffer): Promise<string> {
+    const dishName = await this.dishAIService.recognizeDish(dishImage);
+
+    if (dishName === 'UNRECOGNIZED') {
+      throw new DishUnrecognized();
+    }
+
+    if (dishName === 'MANY_DISHES') {
+      throw new ThereAreManyDishes();
+    }
+
+    return dishName;
   }
 }

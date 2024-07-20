@@ -1,10 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserRepository } from '../domain/repositories/user.repository';
+import { UserRepository } from '../domain/ports/user.repository';
 import { User } from '../domain/entities';
 import { UserNotFound } from '../domain/errors';
 
+export interface ForFindingUser {
+  execute(userId: string): Promise<User>;
+}
+
 @Injectable()
-export class FindUser {
+export class UserFinder implements ForFindingUser {
   constructor(
     @Inject('UserRepository') private readonly userRepository: UserRepository,
   ) {}

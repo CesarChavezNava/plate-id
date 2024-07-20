@@ -38,13 +38,13 @@ export class UserController {
   }
 
   @Put(':userId')
-  async update(
+  async updatePreferences(
     @Param('userId') userId: string,
     @Body() dto: UpdateUserDto,
     @Res() res: Response,
   ): Promise<void> {
     try {
-      await this.userService.update(userId, dto);
+      await this.userService.updatePreferences(userId, dto);
 
       res.status(HttpStatus.NO_CONTENT).send();
     } catch (error) {

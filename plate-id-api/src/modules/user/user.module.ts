@@ -1,22 +1,17 @@
 import { Module } from '@nestjs/common';
 import { SharedModule } from '../shared/shared.module';
-import { UserProviders } from './infrastructure/adapters/mongo/user.providers';
-import { UserMongoRepository } from './infrastructure/adapters/mongo/user-mongo.repository';
-import { CreateUser, FindUser, UpdateUser } from './application';
+import { MongoUserProviders } from './infrastructure/adapters/mongo/mongo-user.provider';
+import { UserUseCasesProviders } from './application';
 import { DatabaseModule } from '../shared/database.module';
+import { UserAdapterProviders } from './infrastructure/adapters';
 
 @Module({
   imports: [SharedModule, DatabaseModule],
   providers: [
-    ...UserProviders,
-    {
-      provide: 'UserRepository',
-      useClass: UserMongoRepository,
-    },
-    CreateUser,
-    UpdateUser,
-    FindUser,
+    ...MongoUserProviders,
+    ...UserAdapterProviders,
+    ...UserUseCasesProviders,
   ],
-  exports: [CreateUser, UpdateUser, FindUser],
+  exports: [...UserUseCasesProviders],
 })
 export class UserModule {}

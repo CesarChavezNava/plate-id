@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { IAMapper } from './infrastructure/ia/ia.mapper';
+import { AIMapper } from './infrastructure/ai/ai.mapper';
 
 @Module({
-  providers: [IAMapper],
-  exports: [IAMapper],
+  providers: [AIMapper],
+  exports: [AIMapper],
 })
 export class SharedModule {}
