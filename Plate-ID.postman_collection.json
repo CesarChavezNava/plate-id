@@ -1,0 +1,131 @@
+{
+  "info": {
+    "_postman_id": "09a1807a-eadb-429d-831a-4881e43bc4b6",
+    "name": "Plate-ID",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "4863301"
+  },
+  "item": [
+    {
+      "name": "01 CREATE USER",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Check if json has an user id\", function() {\r",
+              "    pm.response.to.have.jsonBody(\"userId\");\r",
+              "    pm.collectionVariables.unset('USER_ID');\r",
+              "    var json = pm.response.json();\r",
+              "    pm.collectionVariables.set('USER_ID', json.userId);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"test@plateid.com\",\r\n    \"preferences\": {\r\n        \"favoriteIngredients\": [\r\n            \"Papas\",\r\n            \"Arrachera\",\r\n            \"Pimienta Negra\",\r\n            \"Lechuga\",\r\n            \"Manzana\"\r\n        ],\r\n        \"dislikedIngredients\": [\r\n            \"Chayote\",\r\n            \"Chicharos\",\r\n            \"Bambu\",\r\n            \"Calabaza\",\r\n            \"Camote\",\r\n            \"Durian\"\r\n        ],\r\n        \"dietaryRestrictions\": [\r\n            \"Fresas\"\r\n        ]\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/users",
+          "host": ["{{BASE_URL}}"],
+          "path": ["users"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 UPDATE PREFERENCES",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"preferences\": {\r\n        \"favoriteIngredients\": [\r\n            \"Papas\",\r\n            \"Arrachera\",\r\n            \"Pimienta Negra\",\r\n            \"Lechuga\",\r\n            \"Manzana\",\r\n            \"Pizza\"\r\n        ],\r\n        \"dislikedIngredients\": [\r\n            \"Chayote\",\r\n            \"Chicharos\",\r\n            \"Bambu\",\r\n            \"Calabaza\",\r\n            \"Camote\",\r\n            \"Pera\"\r\n        ],\r\n        \"dietaryRestrictions\": [\r\n            \"Fresas\",\r\n            \"Sandia\"\r\n        ]\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/users/{{USER_ID}}",
+          "host": ["{{BASE_URL}}"],
+          "path": ["users", "{{USER_ID}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 CALCULATE DISH COMPATIBILITY",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-plateid-userid",
+            "value": "{{USER_ID}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "image",
+              "type": "file",
+              "src": ""
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/dish-compatibility",
+          "host": ["{{BASE_URL}}"],
+          "path": ["dish-compatibility"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "USER_ID",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
